@@ -1,3 +1,6 @@
+# Made only to interpret the differential equation
+
+
 def splitEquations(equation):
     separated = []
     temp = ""
