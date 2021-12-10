@@ -10,40 +10,70 @@ def rgb(rgb):
     # translates an rgb tuple of int to a tkinter friendly color code
     return "#%02x%02x%02x" % rgb 
 
+def splitEquations(equation):
+    separated = []
+    temp = ""
+    for i in equation:
+        if i == "+" or i == "-":
+            separated.append(temp)
+            temp = i
+        else:
+            temp+=i
+    separated.append(temp)
+    if separated[0] == "": separated.pop(0)
+    return separated
+
 def removeLetters(string):
     list = []
     for i in string:
         if not i.isalpha():
             list.append(i)
-    final = float("".join(list))
-    return final 
+    strvalue = "".join(list)
+    if strvalue == "-" or strvalue == "+" or strvalue == "": strvalue += "1"
+    return float(strvalue)
 
-def stepMethod(start, 
-        c, # y'=c*y
-        toNumber, 
-        differance):
-    y = start
+def getXYvalues(ekv):
+    splitted = splitEquations(ekv)
+    x = 0
+    y = 0
+    for i in splitted:
+        amount = removeLetters(i)
+        for j in i:
+            if j == "x": x+=amount
+            if j == "y": y+=amount
+    return x, y
+
+def stepMethod(x, y, startValue, toNumber, differance):
+    if differance == 0:
+        return "Error: Step size cannot be 0"
+    currentValue = startValue
     a = 0
     while a <= toNumber:
-        yprim = y*c*differance
-        y += yprim
+        yprim = currentValue*y*differance+x*differance
+        currentValue += yprim
         a+=differance
-    return y
-
+    return currentValue
 
 def calculate():
+    showOutput = True
+
     startValue = inputField.get("1.0", END); startValue = removeLetters(startValue)
     toNumber = toNumberField.get("1.0", END); toNumber = removeLetters(toNumber)
-    diffEkv = diffEkvField.get("1.0", END); diffEkv = removeLetters(diffEkv)
+    diffEkv = diffEkvField.get("1.0", END); diffEkv = diffEkv.replace("\n", "")
     stepSize = stepSizeField.get("1.0", END); stepSize = removeLetters(stepSize)
-    print(startValue)
-    print(toNumber)
-    print(diffEkv)
-    print(stepSize)
+    x, y = getXYvalues(diffEkv)
+    
+    if showOutput:
+        print("Startvalue:\t",startValue)
+        print("To number:\t",toNumber)
+        print("Diff ekv:\t",diffEkv)
+        print("Stepsize:\t",stepSize)
+        print("x:\t",x)
+        print("y:\t",y)
 
-
-    output = stepMethod(start = startValue, toNumber = toNumber, c = diffEkv, differance= stepSize)
-    print(output)
+    output = stepMethod(startValue=startValue, toNumber = toNumber, x=x, y=y, differance=stepSize)
+    if showOutput:
+        print(output)
 
     outputField.delete("1.0","end")
     outputField.insert("1.0", output)
@@ -121,7 +151,7 @@ toNumberField = Text(root, width=25, height=1, font=("Helvetica", 10))
 toNumberField.grid(column=2, row=5)
 
     # diff ekvation, c
-title = ttk.Label(root, style="BW.TLabel", text="c: (y'=c*y)", font="Helvetica 13 bold", padding=3)
+title = ttk.Label(root, style="BW.TLabel", text="DiffEkv, y':", font="Helvetica 13 bold", padding=3)
 title.grid(column=0, row=6)
 diffEkvField = Text(root, width=25, height=1, font=("Helvetica", 10))
 diffEkvField.grid(column=2, row=6)
