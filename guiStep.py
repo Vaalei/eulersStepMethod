@@ -119,7 +119,7 @@ title.grid(column=0, row=0)
 
 
 # Input
-inputTitle = ttk.Label(root, style="BW.TLabel", text="Input", font="Helvetica 18 bold", padding=10)
+inputTitle = ttk.Label(root, style="BW.TLabel", text="Start", font="Helvetica 18 bold", padding=10)
 inputTitle.grid(column=0, row=1)
 
 inputField = Text(root, width=25, height=5, font=("Helvetica", 10))
@@ -127,7 +127,7 @@ inputField.grid(column=0, row=2)
 
 
 # Output
-outputTitle = ttk.Label(root, style="BW.TLabel", text="Output", font="Helvetica 18 bold", padding=10)
+outputTitle = ttk.Label(root, style="BW.TLabel", text="Result", font="Helvetica 18 bold", padding=10)
 outputTitle.grid(column=2, row=1)
 
 outputField = Text(root, width=25, height=5, font=("Helvetica", 10))
@@ -143,12 +143,15 @@ title = ttk.Label(root, style="BW.TLabel", text="Step size", font="Helvetica 13 
 title.grid(column=0, row=4)
 stepSizeField = Text(root, width=25, height=1, font=("Helvetica", 10))
 stepSizeField.grid(column=2, row=4)
+stepSizeField.insert("1.0", "0.001")
 
     # To Number
-title = ttk.Label(root, style="BW.TLabel", text="To Number", font="Helvetica 13 bold", padding=3)
+title = ttk.Label(root, style="BW.TLabel", text="n:", font="Helvetica 13 bold", padding=3)
 title.grid(column=0, row=5)
 toNumberField = Text(root, width=25, height=1, font=("Helvetica", 10))
 toNumberField.grid(column=2, row=5)
+toNumberField.insert("1.0", "")
+
 
     # diff ekvation, c
 title = ttk.Label(root, style="BW.TLabel", text="DiffEkv, y':", font="Helvetica 13 bold", padding=3)
