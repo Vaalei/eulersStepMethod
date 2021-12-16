@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import scrolledtext as st
 from webbrowser import open_new
 
 
